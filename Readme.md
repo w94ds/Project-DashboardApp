@@ -14,4 +14,7 @@
     $ npm install react-circular-progressbar  
     $ npm install recharts
     $ npm install @mui/x-data-grid
+
+* Deploy
+    $ npm run build
 ```
