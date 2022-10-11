@@ -1,0 +1,56 @@
+.navbar {
+    height: 8vh;
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    color: white;
+
+    .wrapper {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+
+        .Logo {
+            display: flex;
+
+            .Link {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+
+                .icon {
+                    font-size: 20px;
+                    color: white;
+                }
+
+                .text {
+                    color: white;
+                }
+            }
+        }
+
+        .items {
+            display: flex;
+
+            .item {
+
+                width: 150px;
+
+                .Link {
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+
+                    .icon {
+                        color: white;
+                    }
+
+                    .text {
+                        color: white;
+                    }
+                }
+            }
+        }
+    }
+}

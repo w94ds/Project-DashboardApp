@@ -11,9 +11,11 @@
 * Installtion
     $ npm i react-router-dom
     $ npm install --save-dev node-sass
+    $ npm install @mui/material @emotion/react @emotion/styled
+    $ npm install @mui/icons-material
+    $ npm install @mui/x-data-grid
     $ npm install react-circular-progressbar  
     $ npm install recharts
-    $ npm install @mui/x-data-grid
 
 * Deploy
     $ npm run build
