@@ -1,54 +1,110 @@
+@mixin mobile {
+    @media(max-width:768px) {
+        @content;
+    }
+}
+
 .navbar {
-    height: 8vh;
+    // height: 8vh;
     display: flex;
     align-items: center;
     font-size: 20px;
-    color: white;
 
     .wrapper {
         width: 100%;
-        padding: 20px;
         display: flex;
         justify-content: space-between;
+        // background-color: gray;
 
         .Logo {
-            display: flex;
+            width: 100%;
+            height: 8vh;
+            display: grid;
+            grid-template-columns:5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;
+            // background-color: aqua;
 
-            .Link {
+            .Link-Logo {
                 display: flex;
                 align-items: center;
                 text-decoration: none;
+                grid-column: 1 / 5;
+                color: white;
+                margin-left: 20px;
+                // background-color: red;
 
-                .icon {
-                    font-size: 20px;
-                    color: white;
+                @include mobile {
+                    grid-column: 2 / 3;
                 }
 
                 .text {
-                    color: white;
+                    @include mobile {
+                        display: none;
+                    }
                 }
             }
-        }
 
-        .items {
-            display: flex;
+            .Link-Home {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                grid-column: 13 / 15;
+                color: white;
+                // background-color: yellow;
 
-            .item {
+                @include mobile {
+                    display: none;
+                }
+            }
 
-                width: 150px;
+            .Link-Dashboard1 {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                grid-column: 15 / 17;
+                color: white;
+                // background-color: red;
 
-                .Link {
+                @include mobile {
+                    display: none;
+                }
+            }
+
+            .Link-Dashboard2 {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                grid-column: 17 / 19;
+                color: white;
+                // background-color: red;
+
+                @include mobile {
+                    display: none;
+                }
+            }
+
+            .Link-Contact {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                grid-column: 19 / 21;
+                color: white;
+                // background-color: yellow;
+
+                @include mobile {
+                    display: none;
+                }
+            }
+
+            .Link-Menu {
+                display: none;
+                align-items: center;
+                text-decoration: none;
+                grid-column: 19 / 20;
+                color: white;
+                // background-color: yellow;
+
+                @include mobile {
                     display: flex;
-                    align-items: center;
-                    text-decoration: none;
-
-                    .icon {
-                        color: white;
-                    }
-
-                    .text {
-                        color: white;
-                    }
                 }
             }
         }
