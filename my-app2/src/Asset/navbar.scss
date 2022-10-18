@@ -1,0 +1,218 @@
+@mixin mobile {
+    @media(max-width:1280px) {
+        @content;
+    }
+}
+
+.page {
+    .NavBar {
+        .nbLogo {
+            width: 100%;
+            height: 8vh;
+            background-color: rgb(9, 9, 99);
+            display: grid;
+            grid-template-columns:
+                5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;
+
+            .nbLink-Logo {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                grid-column: 2 / 7;
+                color: white;
+            }
+
+            .nbLink-Home {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                grid-column: 13 / 15;
+                color: white;
+            }
+
+            .nbLink-Dashboard1 {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                grid-column: 15 / 17;
+                color: white;
+            }
+
+            .nbLink-Dashboard2 {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                grid-column: 17 / 19;
+                color: white;
+            }
+
+            .nbLink-Contact {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                grid-column: 19 / 21;
+                color: white;
+            }
+
+            .nbLink-Menu {
+                display: none;
+            }
+        }
+    }
+
+    .NavBarMobile {
+        display: none;
+    }
+
+    .Page {
+        display: block;
+        height: 92vh;
+        background-color: rgb(15, 185, 185);
+    }
+
+    @include mobile {
+        .NavBar {
+            .nbLogo {
+                width: 100%;
+                height: 8vh;
+                background-color: rgb(9, 9, 99);
+                display: grid;
+                grid-template-columns:
+                    5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;
+
+                .nbLink-Logo {
+                    display: none;
+                }
+
+                .nbLink-Home {
+                    display: none;
+                }
+
+                .nbLink-Dashboard1 {
+                    display: none;
+                }
+
+                .nbLink-Dashboard2 {
+                    display: none;
+                }
+
+                .nbLink-Contact {
+                    display: none;
+                }
+
+                .nbLink-Menu {
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    grid-column: 19 / 20;
+                    color: white;
+                }
+            }
+        }
+
+        .NavBarMobile {
+            display: none;
+            height: 100vh;
+            background-color: rgb(9, 9, 99);
+
+            .nbmLogo {
+                width: 100vw;
+                height: 100vh;
+                display: grid;
+                grid-template-rows:
+                    10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+                // background-color: aqua;
+
+                .nbmLink-Home {
+                    display: flex;
+                    align-items: center;
+                    width: 100vw;
+                    text-decoration: none;
+                    grid-row: 3 / 4;
+                    color: white;
+
+                    .nbmicon {
+                        display: none;
+                    }
+
+                    .nbmtext {
+                        width: 100vw;
+                        text-align: center;
+                    }
+                }
+
+                .nbmLink-Dashboard1 {
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    grid-row: 4 / 5;
+                    color: white;
+
+                    .nbmicon {
+                        display: none;
+                    }
+
+                    .nbmtext {
+                        width: 100vw;
+                        text-align: center;
+                    }
+                }
+
+                .nbmLink-Dashboard2 {
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    grid-row: 5 / 6;
+                    color: white;
+
+                    .nbmicon {
+                        display: none;
+                    }
+
+                    .nbmtext {
+                        width: 100vw;
+                        text-align: center;
+                    }
+                }
+
+                .nbmLink-Contact {
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    grid-row: 6 / 7;
+                    color: white;
+
+                    .nbmicon {
+                        display: none;
+                    }
+
+                    .nbmtext {
+                        width: 100vw;
+                        text-align: center;
+                    }
+                }
+
+                .nbmLink-Close {
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    grid-row: 7 / 8;
+                    color: white;
+
+                    .nbmicon {
+                        display: none;
+                    }
+
+                    .nbmtext {
+                        width: 100vw;
+                        text-align: center;
+                    }
+                }
+            }
+        }
+
+        .Page {
+            display: block;
+        }
+    }
+}
