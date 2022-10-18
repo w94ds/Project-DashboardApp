@@ -34,36 +34,36 @@ const Navbar = () => {
     return (
         <div className="navbar">
 
-            <div className="wrapper">
+            <div className="nbwrapper">
 
-                <div className="Logo">
-                    <Link to="/" className='Link-Logo' onClick={HomeClick}>
-                        <PollIcon className="icon"></PollIcon>
-                        <div className="text" >Multi-Energy Analysis System </div>
+                <div className="nbLogo">
+                    <Link to="/" className='nbLink-Logo' onClick={HomeClick}>
+                        <PollIcon className="nbicon"></PollIcon>
+                        <div className="nbtext" >Multi-Energy Analysis System </div>
                     </Link>
 
-                    <Link to="/" className='Link-Home' onClick={HomeClick}>
-                        <HomeIcon className="icon" />
-                        <div className="text" >Home Page</div>
+                    <Link to="/" className='nbLink-Home' onClick={HomeClick}>
+                        <HomeIcon className="nbicon" />
+                        <div className="nbtext" >Home Page</div>
                     </Link>
 
-                    <Link to="/dashboard1" className='Link-Dashboard1' onClick={Dashboard1Click}>
-                        <DashboardIcon className="icon" />
-                        <div className="text" >Dashboard1</div>
+                    <Link to="/dashboard1" className='nbLink-Dashboard1' onClick={Dashboard1Click}>
+                        <DashboardIcon className="nbicon" />
+                        <div className="nbtext" >Dashboard1</div>
                     </Link>
 
-                    <Link to="/dashboard2" className='Link-Dashboard2' onClick={Dashboard2Click}>
-                        <DashboardIcon className="icon" />
-                        <div className="text" >Dashboard2</div>
+                    <Link to="/dashboard2" className='nbLink-Dashboard2' onClick={Dashboard2Click}>
+                        <DashboardIcon className="nbicon" />
+                        <div className="nbtext" >Dashboard2</div>
                     </Link>
 
-                    <Link to="/contact" className='Link-Contact' onClick={ContactClick}>
-                        <PermContactCalendarIcon className="icon" />
-                        <div className="text" >Contact</div>
+                    <Link to="/contact" className='nbLink-Contact' onClick={ContactClick}>
+                        <PermContactCalendarIcon className="nbicon" />
+                        <div className="nbtext" >Contact</div>
                     </Link>
 
-                    <Link className='Link-Menu' onClick={MenuClick}>
-                        <MenuIcon className="icon" />
+                    <Link className='nbLink-Menu' onClick={MenuClick}>
+                        <MenuIcon className="nbicon" />
                     </Link>
                 </div>
 

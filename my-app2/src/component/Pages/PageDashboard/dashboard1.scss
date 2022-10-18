@@ -1,41 +1,41 @@
 @mixin mobile {
-    @media(max-width:920px) {
+    @media(max-width:1080px) {
         @content;
     }
 }
 
-.contact {
-    .cNavBar {
+.dashboard1 {
+    .db1NavBar {
         height: 8vh;
         background-color: rgb(9, 9, 99);
     }
 
-    .cNavBarMobile {
+    .db1NavBarMobile {
         display: none;
         height: 8vh;
         background-color: rgb(9, 9, 99);
     }
 
-    .cPage {
+    .db1Page {
         height: 92vh;
         background-color: rgb(15, 185, 185);
     }
 
     @include mobile {
-        .cNavBar {
+        .db1NavBar {
             display: none;
             background-color: rgb(9, 9, 99);
         }
 
-        .cNavBarMobile {
-            display: block;
+        .db1NavBarMobile {
+            display: flex;
             height: 100vh;
             background-color: rgb(9, 9, 99);
+            transition: all 1s -.3s;
         }
     
-        .cPage {
+        .db1Page {
             display: none;
-        }
-    
+        }    
     }
 }

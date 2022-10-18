@@ -4,38 +4,39 @@
     }
 }
 
-.contact {
-    .cNavBar {
+.dashboard2 {
+    .db2NavBar {
         height: 8vh;
         background-color: rgb(9, 9, 99);
     }
 
-    .cNavBarMobile {
+    .db2NavBarMobile {
         display: none;
         height: 8vh;
         background-color: rgb(9, 9, 99);
     }
 
-    .cPage {
+    .db2Page {
         height: 92vh;
         background-color: rgb(15, 185, 185);
     }
 
     @include mobile {
-        .cNavBar {
+        .db2NavBar {
             display: none;
             background-color: rgb(9, 9, 99);
         }
 
-        .cNavBarMobile {
+        .db2NavBarMobile {
             display: block;
             height: 100vh;
             background-color: rgb(9, 9, 99);
         }
     
-        .cPage {
+        .db2Page {
             display: none;
         }
     
     }
+
 }
