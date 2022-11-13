@@ -37,7 +37,7 @@ const D1Contain = () => {
     }
 
     function createData(name, mon, tue, wed, thu, fri, sat, sun) {
-        return { name, mon, tue, wed, thu, fri, sat, sun};
+        return { name, mon, tue, wed, thu, fri, sat, sun };
     }
 
     const rows = [
@@ -64,8 +64,8 @@ const D1Contain = () => {
 
                 <div className='d1Contain-Contain-Grid3'>
                     <TableContainer component={Paper} className='Table'>
-                        <Table 
-                            // sx={{ minWidth: 650 }} aria-label="simple table"
+                        <Table
+                        // sx={{ minWidth: 650 }} aria-label="simple table"
                         >
                             <TableHead>
                                 <TableRow>
@@ -82,8 +82,8 @@ const D1Contain = () => {
                             <TableBody>
                                 {rows.map((row) => (
                                     <TableRow
-                                        // key={row.name}
-                                        // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    // key={row.name}
+                                    // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
                                         <TableCell align='right' component="th" scope="row">{row.name}</TableCell>
                                         <TableCell align="center">{row.mon}</TableCell>
