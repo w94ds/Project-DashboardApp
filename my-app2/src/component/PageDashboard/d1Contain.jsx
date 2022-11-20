@@ -62,7 +62,7 @@ const D1Contain = () => {
     const [SunCC, setSunCC] = useState(0);
     const [SunCCR, setSunCCR] = useState(0);
 
-    // const [MBG, setMBG] = useState(false);
+    // Light 
     let MonCBG = document.getElementById('MonCBG')
     let TueCBG = document.getElementById('TueCBG')
     let WedCBG = document.getElementById('WedCBG')
@@ -130,7 +130,7 @@ const D1Contain = () => {
         createDataDate(<h1>尖峰負載</h1>, <h1>{MonLP}</h1>, <h1>{TueLP}</h1>, <h1>{WedLP}</h1>, <h1>{ThuLP}</h1>, <h1>{FriLP}</h1>, <h1>{SatLP}</h1>, <h1>{SunLP}</h1>),
         createDataDate(<h1>被轉容量</h1>, <h1>{MonCC}</h1>, <h1>{TueCC}</h1>, <h1>{WedCC}</h1>, <h1>{ThuCC}</h1>, <h1>{FriCC}</h1>, <h1>{SatCC}</h1>, <h1>{SunCC}</h1>),
         createDataDate(<h1>被轉容量率</h1>, <h1>{MonCCR}</h1>, <h1>{TueCCR}</h1>, <h1>{WedCCR}</h1>, <h1>{ThuCCR}</h1>, <h1>{FriCCR}</h1>, <h1>{SatCCR}</h1>, <h1>{SunCCR}</h1>),
-        createDataDate(<h1>被轉容量</h1>,
+        createDataDate(<h1>被轉狀態</h1>,
             <canvas className="point" id="MonCBG"></canvas>,
             <canvas className="point" id="TueCBG"></canvas>,
             <canvas className="point" id="WedCBG"></canvas>,
@@ -299,7 +299,7 @@ const D1Contain = () => {
                 </div>
 
                 <div className='d1Contain-Contain-GridTest'>
-                    <button onClick={FetchClick}>Fetch</button>
+                    <button onClick={FetchClick}>Test</button>
                     <p>{isId}</p>
                     <p>{isName}</p>
                 </div>
