@@ -6,23 +6,42 @@
 
     .d1Contain-Contain {
         display: grid;
-        grid-template-columns:  5% 5% 5% 5% 5%
-                                5% 5% 5% 5% 5%
-                                5% 5% 5% 5% 5%
-                                5% 5% 5% 5% 5%;
-        grid-template-rows: 10vh 10vh 10vh 
-                            10vh 10vh 10vh
-                            10vh 10vh 10vh;
+        grid-template-columns: 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5% 5%;
+        grid-template-rows: 10vh 10vh 10vh 10vh 10vh 10vh 10vh 10vh 10vh;
         // border: 1px;
         // border-color: black;
 
+        .d1Contain-Contain-Title1{
+            grid-row: 1 / 2;
+            grid-column: 2 / 5;
+            line-height: 10vh;
+        }
+
+        .d1Contain-Contain-Title2{
+            grid-row: 1 / 2;
+            grid-column: 15 / 18;
+            line-height: 10vh;
+        }
+        
+        .d1Contain-Contain-Title3{
+            grid-row: 4 / 5;
+            grid-column: 2 / 5;
+            line-height: 10vh;
+        }
+        
+        .d1Contain-Contain-Title4{
+            grid-row: 4 / 5;
+            grid-column: 15 / 18;
+            line-height: 10vh;
+        }
+        
         .d1Contain-Contain-Grid1 {
             grid-row: 2 / 3;
             grid-column: 2 / 13;
             // background-color: lightblue;
-            
-            .Table{
-                background-color: rgb(11, 128, 128); 
+
+            .Table {
+                background-color: rgb(15, 168, 168);
                 // background-color: red;
                 // margin: 10px;
             }
@@ -32,9 +51,9 @@
             grid-row: 2 / 3;
             grid-column: 15 / 20;
             // background-color: purple;
-            
-            .Table{
-                background-color: rgb(11, 128, 128); 
+
+            .Table {
+                background-color: rgb(15, 168, 168);
                 // background-color: red;
                 // margin: 10px;
             }
@@ -45,16 +64,144 @@
             grid-column: 2 / 13;
             // background-color: yellow;
 
-            .Table{
-                background-color: rgb(11, 128, 128); 
+            .Table {
+                background-color: rgb(15, 168, 168);
                 // background-color: red;
                 // margin: 10px;
             }
+
+            .point {
+                width:30px;
+                height: 30px;
+
+                background-color: black;
+                border-radius: 50px;
+            }
         }
 
+
         .d1Contain-Contain-Grid4 {
-            grid-row:  5 / 9;
-            grid-column: 15 / 20;
+            grid-row: 5 / 6;
+            grid-column: 15 / 16;
+            // background-color: yellow;
+
+            .point {
+                width:60px;
+                height: 60px;
+
+                background-color: lightgreen;
+                border-radius: 50px;
+            }
+        }
+        
+        .d1Contain-Contain-Grid5 {
+            grid-row: 6 / 7;
+            grid-column: 15 / 16;
+            // background-color: yellow;
+            
+            .point {
+                width:60px;
+                height: 60px;
+
+                background-color: yellow;
+                border-radius: 50px;
+            }
+        }
+        
+        .d1Contain-Contain-Grid6 {
+            grid-row: 7 / 8;
+            grid-column: 15 / 16;
+            // background-color: yellow;
+
+            .point {
+                width:60px;
+                height: 60px;
+
+                background-color: orange;
+                border-radius: 50px;
+            }
+        }
+        
+        .d1Contain-Contain-Grid7 {
+            grid-row: 8 / 9;
+            grid-column: 15 / 16;
+            // background-color: yellow;
+
+            .point {
+                width:60px;
+                height: 60px;
+
+                background-color: red;
+                border-radius: 50px;
+            }
+        }
+        
+        .d1Contain-Contain-Grid8 {
+            grid-row: 9 / 10;
+            grid-column: 15 / 16;
+            // background-color: yellow;
+
+            .point {
+                width:60px;
+                height: 60px;
+
+                background-color: black;
+                border-radius: 50px;
+            }
+        }
+
+        .d1Contain-Contain-Grid8 {
+            grid-row: 9 / 10;
+            grid-column: 15 / 16;
+            // background-color: yellow;
+
+            .point {
+                width:60px;
+                height: 60px;
+
+                background-color: black;
+                border-radius: 50px;
+            }
+        }
+
+        .d1Contain-Contain-Grid9 {
+            grid-row: 5 / 6;
+            grid-column: 16 / 18;
+            // background-color: yellow;
+
+        }
+        
+        .d1Contain-Contain-Grid10 {
+            grid-row: 6 / 7;
+            grid-column: 16 / 18;
+            // background-color: yellow;
+
+        }
+        
+        .d1Contain-Contain-Grid11 {
+            grid-row: 7 / 8;
+            grid-column: 16 / 18;
+            // background-color: yellow;
+
+        }
+        
+        .d1Contain-Contain-Grid12 {
+            grid-row: 8 / 9;
+            grid-column: 16 / 18;
+            // background-color: yellow;
+
+        }
+        
+        .d1Contain-Contain-Grid13 {
+            grid-row: 9 / 10;
+            grid-column: 16 / 18;
+            // background-color: yellow;
+
+        }
+        
+        .d1Contain-Contain-GridTest {
+            grid-row: 5 / 6;
+            grid-column: 19 / 20;
             // background-color: yellow;
         }
     }
