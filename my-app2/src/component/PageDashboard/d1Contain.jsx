@@ -74,7 +74,7 @@ const D1Contain = () => {
     const FetchClick = () => {
         console.log('HIHIHI')
 
-        fetch('http://127.0.0.1:5000')
+        fetch('http://127.0.0.1:5000/Get_TPC_PowerNeed_Pre')
             .then((response) => response.json())
             .then((json) => {
                 jsonData = json
@@ -82,7 +82,7 @@ const D1Contain = () => {
                 // console.log(typeof (jsonData))
                 // console.log(jsonData.Id)
                 // console.log(jsonData.Name)
-                UpdateUI()
+                // UpdateUI()
             })
             .catch((error) => console.log('Error : ', error));
     }
@@ -108,7 +108,7 @@ const D1Contain = () => {
 
     const rowsBasic = [
         // CP , EP , MP , UR , MUR
-        createDataBasic(<h1>{CP}</h1>, <h1>{EP}</h1>, <h1>{MP}</h1>, <h1>{UR}</h1>, <h1>{MUR}</h1>)
+        createDataBasic(<h3>{CP}</h3>, <h3>{EP}</h3>, <h3>{MP}</h3>, <h3>{UR}</h3>, <h3>{MUR}</h3>)
     ]
 
     function createDataStatus(Divice, GenPower, DGRate) {
@@ -117,7 +117,7 @@ const D1Contain = () => {
 
     const rowsStatus = [
         // DV , GP , DGR
-        createDataStatus(<h1>{DV}</h1>, <h1>{GP}</h1>, <h1>{DGR}</h1>)
+        createDataStatus(<h3>{DV}</h3>, <h3>{GP}</h3>, <h3>{DGR}</h3>)
     ]
 
     function createDataDate(name, mon, tue, wed, thu, fri, sat, sun) {
@@ -126,11 +126,11 @@ const D1Contain = () => {
 
     const rows = [
         // SP , LP , CC , CCR , B
-        createDataDate(<h1>淨尖峰供電能力</h1>, <h1>{MonSP}</h1>, <h1>{TueSP}</h1>, <h1>{WedSP}</h1>, <h1>{ThuSP}</h1>, <h1>{FriSP}</h1>, <h1>{SatSP}</h1>, <h1>{SunSP}</h1>),
-        createDataDate(<h1>尖峰負載</h1>, <h1>{MonLP}</h1>, <h1>{TueLP}</h1>, <h1>{WedLP}</h1>, <h1>{ThuLP}</h1>, <h1>{FriLP}</h1>, <h1>{SatLP}</h1>, <h1>{SunLP}</h1>),
-        createDataDate(<h1>被轉容量</h1>, <h1>{MonCC}</h1>, <h1>{TueCC}</h1>, <h1>{WedCC}</h1>, <h1>{ThuCC}</h1>, <h1>{FriCC}</h1>, <h1>{SatCC}</h1>, <h1>{SunCC}</h1>),
-        createDataDate(<h1>被轉容量率</h1>, <h1>{MonCCR}</h1>, <h1>{TueCCR}</h1>, <h1>{WedCCR}</h1>, <h1>{ThuCCR}</h1>, <h1>{FriCCR}</h1>, <h1>{SatCCR}</h1>, <h1>{SunCCR}</h1>),
-        createDataDate(<h1>被轉狀態</h1>,
+        createDataDate(<h3>淨尖峰供電能力</h3>, <h3>{MonSP}</h3>, <h3>{TueSP}</h3>, <h3>{WedSP}</h3>, <h3>{ThuSP}</h3>, <h3>{FriSP}</h3>, <h3>{SatSP}</h3>, <h3>{SunSP}</h3>),
+        createDataDate(<h3>尖峰負載</h3>, <h3>{MonLP}</h3>, <h3>{TueLP}</h3>, <h3>{WedLP}</h3>, <h3>{ThuLP}</h3>, <h3>{FriLP}</h3>, <h3>{SatLP}</h3>, <h3>{SunLP}</h3>),
+        createDataDate(<h3>被轉容量</h3>, <h3>{MonCC}</h3>, <h3>{TueCC}</h3>, <h3>{WedCC}</h3>, <h3>{ThuCC}</h3>, <h3>{FriCC}</h3>, <h3>{SatCC}</h3>, <h3>{SunCC}</h3>),
+        createDataDate(<h3>被轉容量率</h3>, <h3>{MonCCR}</h3>, <h3>{TueCCR}</h3>, <h3>{WedCCR}</h3>, <h3>{ThuCCR}</h3>, <h3>{FriCCR}</h3>, <h3>{SatCCR}</h3>, <h3>{SunCCR}</h3>),
+        createDataDate(<h3>被轉狀態</h3>,
             <canvas className="point" id="MonCBG"></canvas>,
             <canvas className="point" id="TueCBG"></canvas>,
             <canvas className="point" id="WedCBG"></canvas>,
@@ -145,19 +145,19 @@ const D1Contain = () => {
 
             <div className='d1Contain-Contain'>
                 <div className='d1Contain-Contain-Title1'>
-                    <h1>今日電力資訊</h1>
+                    <h3>今日電力資訊</h3>
                 </div>
 
                 <div className='d1Contain-Contain-Title2'>
-                    <h1>發電率</h1>
+                    <h3>發電率</h3>
                 </div>
 
                 <div className='d1Contain-Contain-Title3'>
-                    <h1>本週電力資訊</h1>
+                    <h3>本週電力資訊</h3>
                 </div>
 
                 <div className='d1Contain-Contain-Title4'>
-                    <h1>燈號說明</h1>
+                    <h3>燈號說明</h3>
                 </div>
 
                 <div className='d1Contain-Contain-Grid1'>
@@ -167,11 +167,11 @@ const D1Contain = () => {
                         >
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="center"><h1>目前用電量()</h1></TableCell>
-                                    <TableCell align="center"><h1>預估最高用電()</h1></TableCell>
-                                    <TableCell align="center"><h1>最大供電能力()</h1></TableCell>
-                                    <TableCell align="center"><h1>使用率(%)</h1></TableCell>
-                                    <TableCell align="center"><h1>尖峰使用率(%)</h1></TableCell>
+                                    <TableCell align="center"><h3 >目前用電量(kWh)</h3></TableCell>
+                                    <TableCell align="center"><h3>預估最高用電(kWh)</h3></TableCell>
+                                    <TableCell align="center"><h3>最大供電能力(kWh)</h3></TableCell>
+                                    <TableCell align="center"><h3>使用率(%)</h3></TableCell>
+                                    <TableCell align="center"><h3>尖峰使用率(%)</h3></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -199,9 +199,9 @@ const D1Contain = () => {
                         >
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="center"><h1>裝置容量</h1></TableCell>
-                                    <TableCell align="center"><h1>淨發電量</h1></TableCell>
-                                    <TableCell align="center"><h1>容量比(%)</h1></TableCell>
+                                    <TableCell align="center"><h3>裝置容量</h3></TableCell>
+                                    <TableCell align="center"><h3>淨發電量</h3></TableCell>
+                                    <TableCell align="center"><h3>容量比(%)</h3></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -228,13 +228,13 @@ const D1Contain = () => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell></TableCell>
-                                    <TableCell align="center"><h1>一</h1></TableCell>
-                                    <TableCell align="center"><h1>二</h1></TableCell>
-                                    <TableCell align="center"><h1>三</h1></TableCell>
-                                    <TableCell align="center"><h1>四</h1></TableCell>
-                                    <TableCell align="center"><h1>五</h1></TableCell>
-                                    <TableCell align="center"><h1>六</h1></TableCell>
-                                    <TableCell align="center"><h1>日</h1></TableCell>
+                                    <TableCell align="center"><h3>一</h3></TableCell>
+                                    <TableCell align="center"><h3>二</h3></TableCell>
+                                    <TableCell align="center"><h3>三</h3></TableCell>
+                                    <TableCell align="center"><h3>四</h3></TableCell>
+                                    <TableCell align="center"><h3>五</h3></TableCell>
+                                    <TableCell align="center"><h3>六</h3></TableCell>
+                                    <TableCell align="center"><h3>日</h3></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -279,23 +279,23 @@ const D1Contain = () => {
                 </div>
 
                 <div className='d1Contain-Contain-Grid9'>
-                    <h1>供電充裕</h1>
+                    <h3>供電充裕</h3>
                 </div>
 
                 <div className='d1Contain-Contain-Grid10'>
-                    <h1>供電吃緊</h1>
+                    <h3>供電吃緊</h3>
                 </div>
 
                 <div className='d1Contain-Contain-Grid11'>
-                    <h1>供電警戒</h1>
+                    <h3>供電警戒</h3>
                 </div>
 
                 <div className='d1Contain-Contain-Grid12'>
-                    <h1>限電警戒</h1>
+                    <h3>限電警戒</h3>
                 </div>
 
                 <div className='d1Contain-Contain-Grid13'>
-                    <h1>限電準備</h1>
+                    <h3>限電準備</h3>
                 </div>
 
                 <div className='d1Contain-Contain-GridTest'>
