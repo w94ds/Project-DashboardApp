@@ -42,27 +42,27 @@ const Contact = () => {
                 <div className="nbLogo">
                     <Link to="/" className='nbLink-Logo' onClick={HomeClick}>
                         <PollIcon className="nbicon"></PollIcon>
-                        <div className="nbtext" >Multi-Energy Analysis System </div>
+                        <div className="nbtext" >電力交易輔助系統</div>
                     </Link>
 
                     <Link to="/" className='nbLink-Home' onClick={HomeClick}>
                         <HomeIcon className="nbicon" />
-                        <div className="nbtext" >Home Page</div>
+                        <div className="nbtext" >首頁</div>
                     </Link>
 
                     <Link to="/dashboard1" className='nbLink-Dashboard1' onClick={Dashboard1Click}>
                         <DashboardIcon className="nbicon" />
-                        <div className="nbtext" >Dashboard1</div>
+                        <div className="nbtext" >監測</div>
                     </Link>
 
                     <Link to="/dashboard2" className='nbLink-Dashboard2' onClick={Dashboard2Click}>
                         <DashboardIcon className="nbicon" />
-                        <div className="nbtext" >Dashboard2</div>
+                        <div className="nbtext" >試算</div>
                     </Link>
 
                     <Link to="/contact" className='nbLink-Contact' onClick={ContactClick}>
                         <PermContactCalendarIcon className="nbicon" />
-                        <div className="nbtext" >Contact</div>
+                        <div className="nbtext" >聯絡我們</div>
                     </Link>
 
                     <Link className='nbLink-Menu' onClick={MenuClick}>
@@ -75,26 +75,26 @@ const Contact = () => {
                 <div className="nbmLogo">
                     <Link to="/" className='nbmLink-Home' onClick={HomeClick}>
                         <HomeIcon className="nbmicon" />
-                        <div className="nbmtext" >Home Page</div>
+                        <div className="nbmtext" >首頁</div>
                     </Link>
 
                     <Link to="/dashboard1" className='nbmLink-Dashboard1' onClick={Dashboard1Click}>
                         <DashboardIcon className="nbmicon" />
-                        <div className="nbmtext" >Dashboard1</div>
+                        <div className="nbmtext" >監測</div>
                     </Link>
 
                     <Link to="/dashboard2" className='nbmLink-Dashboard2' onClick={Dashboard2Click}>
                         <DashboardIcon className="nbmicon" />
-                        <div className="nbmtext" >Dashboard2</div>
+                        <div className="nbmtext" >試算</div>
                     </Link>
 
                     <Link to="/contact" className='nbmLink-Contact' onClick={ContactClick}>
                         <PermContactCalendarIcon className="nbmicon" />
-                        <div className="nbmtext" >Contact</div>
+                        <div className="nbmtext" >聯絡我們</div>
                     </Link>
 
                     <Link to="/Contact" className='nbmLink-Close' onClick={MenuClick}>
-                        <div className="nbmtext" >Close</div>
+                        <div className="nbmtext" >X</div>
                     </Link>
                 </div>
             </div>
