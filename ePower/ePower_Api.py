@@ -6,11 +6,11 @@ Created on Fri Nov 18 11:32:01 2022
 
 from flask import Flask, jsonify
 from flask import request
-from flask_cors import CORS
 import datetime
-import json
+from flask_cors import CORS
+# import json
 
-import crawler as CrawlerReq
+from crawler import crawler as CrawlerReq
 
 app = Flask(__name__)
 CORS(app)
@@ -19,68 +19,88 @@ CORS(app)
 
 @app.route("/")
 def pyConnTest():
-    print('Success!')
-    return "<p>Hi!</p>"
+    print('Hello Flask !')
+    Tnow_local =  datetime.datetime.today()
+    return jsonify(Tnow_local)
+    #return "<p>Connect OK !</p>"
+
 
 ########## GET only ##########
 
 @app.route("/Get_TPC_PowerNeed_Pre")
 def pyGet_TPC_PowerNeed_Pre():
-    #tnow_local = datetime.date.today()
-    eInfo = CrawlerReq.electricityInfo_yday()
-    print(eInfo)
+    tnow_local =  datetime.datetime.today().date()   
+    print (tnow_local)
+    eInfo = CrawlerReq.electricityInfo_yday(tnow_local);
     return jsonify(eInfo)
 
-@app.route("/electricityinfo_Now")
+@app.route("/Get_TPC_PowerNeed_Now")
 def pyGet_TPC_PowerNeed_Now():
-    eInfo_cur = CrawlerReq.electricityinfo_current()
+    tnow_local =  datetime.datetime.today().date()
+    eInfo_cur = CrawlerReq.electricityinfo_current(tnow_local)
     return jsonify(eInfo_cur)
 
 @app.route("/Get_TPC_PowerNeed_Post")
 def pyGet_TPC_PowerNeed_Post():
-    eInfo_Next = CrawlerReq.electricityInfo_future()
+    tnow_local =  datetime.datetime.today().date()
+    eInfo_Next = CrawlerReq.electricityInfo_future(tnow_local)
     return jsonify(eInfo_Next)
 
-@app.route("/Get_TPC_SolarStatus")
-def pyGet_TPC_SolarStatus():
-    eSolar_data = CrawlerReq.solar()
+@app.route("/Get_TPC_SolarInfo")
+def pyGet_TPC_SolarInfo():
+    tnow_local =  datetime.datetime.today().date()
+    eSolar_data = CrawlerReq.solar_info(tnow_local)
     return jsonify(eSolar_data)
 
 @app.route("/Get_ETP_MktInfo")
 def pyGet_ETP_MktInfo():
-    eDeal_data = CrawlerReq.electricity_deal()
+    tnow_local =  datetime.datetime.today().date()
+    eDeal_data = CrawlerReq.electricity_deal(tnow_local)
     return jsonify(eDeal_data)
 
+# Problem
 @app.route("/Get_ETP_Deal_Spinning")
 def pyGet_ETP_Deal_Spinning():
-    eDeal_Spinning = CrawlerReq.electricity_deal_realtimeStored()
+    tnow_local =  datetime.datetime.today().date()
+    eDeal_Spinning = CrawlerReq.electricity_deal_realtimeStored(tnow_local)
     return jsonify(eDeal_Spinning)
 
 @app.route("/Get_ETP_Deal_Supplemental")
 def pyGet_ETP_Deal_Supplemental():
-    eDeal_Supplemental = CrawlerReq.electricity_deal_replenishStore()
+    tnow_local =  datetime.datetime.today().date()
+    eDeal_Supplemental = CrawlerReq.electricity_deal_replenishStore(tnow_local)
     return jsonify(eDeal_Supplemental)
+
+
 
 ########## GET and POST ##########
 
-
 @app.route('/Get_CWB_Weather2FC', methods=['POST'])
 def pyGet_CWB_Weather2FC():
-    #area_req = json.loads(request.get_json())
+    tnow_local =  datetime.datetime.today().date()
     area_req = request.get_json()       
     area_id = area_req.get("area")
-   
+
     #area_req = json.loads (request)
-    if (area_id == "Lukang"):
-        weather2req = CrawlerReq.cwb_LugangInfo()
-    elif (area_id == "Lunbei"):
-        weather2req = CrawlerReq.cwb_LunbeiInfo()
-    elif (area_id == "Budai"):
-        weather2req = CrawlerReq.cwb_LunbeiInfo()
-    elif (area_id == "Qigu"):
-        weather2req = CrawlerReq.cwb_QiguInfo()
+    weather2req ={"weather":"none"}    
+
+    if (area_id == 'Lukang'):
+        #print ("Lukang----")
+        weather2req = CrawlerReq.cwb_LugangInfo(tnow_local)
+    elif (area_id == 'Lunbei'):
+        #print ("Lunbei---")
+        weather2req = CrawlerReq.cwb_LunbeiInfo(tnow_local)
+    elif (area_id == 'Budai'):
+        #print ("Budai---")
+        weather2req = CrawlerReq.cwb_BudaiInfo(tnow_local)
+    elif (area_id == 'Qigu'):
+        #print ("Qigu---")
+        weather2req = CrawlerReq.cwb_QiguInfo(tnow_local)
     else:
+        #print ("error")
         return request.get_json()
+
+    #print (weather2req)
     return jsonify(weather2req)
 
 if __name__ == "__main__":

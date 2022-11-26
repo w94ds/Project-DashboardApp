@@ -50,3 +50,9 @@
 * Deploy
     $ npm run build
 ```
+
+## API Spec
+> Dashboard1
+```
+Get_TPC_PowerNeed_Pre
+```
