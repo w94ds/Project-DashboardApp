@@ -111,13 +111,13 @@ const D1Contain = () => {
         // rows[0].id = jsonData.load_max_yday
         // rows[0].firstName = jsonData.rsv_perc_yday
 
-        MonCBG.style.background = "yellow"
-        TueCBG.style.background = "red"
-        WedCBG.style.background = "blue"
-        ThuCBG.style.background = "gray"
-        FriCBG.style.background = "orange"
-        SatCBG.style.background = "pink"
-        SunCBG.style.background = "green"
+        // MonCBG.style.background = "yellow"
+        // TueCBG.style.background = "red"
+        // WedCBG.style.background = "blue"
+        // ThuCBG.style.background = "gray"
+        // FriCBG.style.background = "orange"
+        // SatCBG.style.background = "pink"
+        // SunCBG.style.background = "green"
     }
 
     const TodayInfoFetchClick = () => {
@@ -265,6 +265,24 @@ const D1Contain = () => {
         setSunLP(jsonData[6].load)
         setSunCC(jsonData[6].value)
         setSunCCR(jsonData[6].percent)
+
+        // if (jsonData[0].lightState)
+
+        console.log('MonState : ' , jsonData[0].lightState)
+        console.log('TueState : ' , jsonData[1].lightState)
+        console.log('WedState : ' , jsonData[2].lightState)
+        console.log('ThuState : ' , jsonData[3].lightState)
+        console.log('FriState : ' , jsonData[4].lightState)
+        console.log('SatState : ' , jsonData[5].lightState)
+        console.log('SunState : ' , jsonData[6].lightState)
+
+        MonCBG.style.background = jsonData[0].lightState
+        TueCBG.style.background = jsonData[1].lightState
+        WedCBG.style.background = jsonData[2].lightState
+        ThuCBG.style.background = jsonData[3].lightState
+        FriCBG.style.background = jsonData[4].lightState
+        SatCBG.style.background = jsonData[5].lightState
+        SunCBG.style.background = jsonData[6].lightState
     }
     //#endregion
 
@@ -334,6 +352,11 @@ const D1Contain = () => {
         console.log('PageLoad')
 
         connectWebSocket()
+
+        TodayInfoFetchClick()
+        LastDayInfoFetchClick()
+        StatusInfoFetchClick()
+        WeekDataInfoFetchClick()
 
         setInterval(() => {
             console.log('Here')
@@ -558,7 +581,6 @@ const D1Contain = () => {
                 </div>
 
                 {/* <div className='d1Contain-Contain-Grid15'>
-
                 </div> */}
 
                 <div className='d1Contain-Contain-GridTest'>

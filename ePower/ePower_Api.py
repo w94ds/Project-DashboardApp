@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Nov 18 11:32:01 2022
+
 @author: User
 """
 
 from flask import Flask, jsonify
 from flask import request
-import datetime
 from flask_cors import CORS
-# import json
+import datetime
+#import json
 
 from crawler import crawler as CrawlerReq
+
 
 app = Flask(__name__)
 CORS(app)
@@ -22,16 +24,15 @@ def pyConnTest():
     print('Hello Flask !')
     Tnow_local =  datetime.datetime.today()
     return jsonify(Tnow_local)
-    #return "<p>Connect OK !</p>"
 
 
 ########## GET only ##########
 
 @app.route("/Get_TPC_PowerNeed_Pre")
 def pyGet_TPC_PowerNeed_Pre():
-    tnow_local =  datetime.datetime.today().date()   
-    print (tnow_local)
+    tnow_local =  datetime.datetime.today().date()
     eInfo = CrawlerReq.electricityInfo_yday(tnow_local);
+    print (eInfo)
     return jsonify(eInfo)
 
 @app.route("/Get_TPC_PowerNeed_Now")
@@ -58,7 +59,6 @@ def pyGet_ETP_MktInfo():
     eDeal_data = CrawlerReq.electricity_deal(tnow_local)
     return jsonify(eDeal_data)
 
-# Problem
 @app.route("/Get_ETP_Deal_Spinning")
 def pyGet_ETP_Deal_Spinning():
     tnow_local =  datetime.datetime.today().date()
@@ -78,8 +78,12 @@ def pyGet_ETP_Deal_Supplemental():
 @app.route('/Get_CWB_Weather2FC', methods=['POST'])
 def pyGet_CWB_Weather2FC():
     tnow_local =  datetime.datetime.today().date()
+    #area_req = json.loads(request.get_json())
     area_req = request.get_json()       
     area_id = area_req.get("area")
+    print (tnow_local)
+    print(area_req)
+    print (area_id)
 
     #area_req = json.loads (request)
     weather2req ={"weather":"none"}    
@@ -88,19 +92,26 @@ def pyGet_CWB_Weather2FC():
         #print ("Lukang----")
         weather2req = CrawlerReq.cwb_LugangInfo(tnow_local)
     elif (area_id == 'Lunbei'):
-        #print ("Lunbei---")
+        print ("Lunbei---")
         weather2req = CrawlerReq.cwb_LunbeiInfo(tnow_local)
     elif (area_id == 'Budai'):
-        #print ("Budai---")
+        print ("Budai---")
         weather2req = CrawlerReq.cwb_BudaiInfo(tnow_local)
     elif (area_id == 'Qigu'):
-        #print ("Qigu---")
+        print ("Qigu---")
         weather2req = CrawlerReq.cwb_QiguInfo(tnow_local)
     else:
-        #print ("error")
+        print ("error")
         return request.get_json()
 
-    #print (weather2req)
+    print (weather2req)
+    #print('\n')
+    #print(request.get_json())
+    #print('Post with Para Success!')
+    #print('\n')
+    #response = request
+    #return request.get_json()
+    #json.dumps()
     return jsonify(weather2req)
 
 if __name__ == "__main__":

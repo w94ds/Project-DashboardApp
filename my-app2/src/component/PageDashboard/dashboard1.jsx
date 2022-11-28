@@ -100,7 +100,7 @@ const Dashboard = () => {
             </div>
 
             <div className="Page" style={{ display: isActive1 ? 'none' : 'block' }}>
-                <D1Contain key={''}></D1Contain>
+                <D1Contain ></D1Contain>
             </div>
         </div>
     )

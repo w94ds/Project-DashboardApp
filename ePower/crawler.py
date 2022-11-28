@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Nov 18 11:33:11 2022
-
-@author: User
-"""
-
 from selenium import webdriver
 from selenium.webdriver.chrome import service as fs
 from selenium.webdriver.chrome.options import Options
@@ -17,7 +10,7 @@ import json
 
 #crawler class 爬蟲套件
 class crawler:
-
+    #@staticmethod
     #擷取今日電力資訊 1.日期 2.更新時間 3.目前用電量 4.使用率 5.預估最高用電 6.尖峰使用率 7.今日最大供電能力 8.供電狀況
     def electricityinfo_current(self, strDate = datetime.datetime.today().date()):
         #今日日期
@@ -183,17 +176,17 @@ class crawler:
                 driver.implicitly_wait(10)
                 time.sleep(2)
                 datetime = driver.find_element(By.ID, 'datetime').text
-                capacity_stored = driver.find_element(By.XPATH, '//*[@id="unitgentab"]/tbody/tr[183]/td[2]').text
+                capacity_stored = driver.find_element(By.XPATH, '//*[@id="unitgentab"]/tbody/tr[185]/td[2]').text
                 capacity_stored = float(capacity_stored[0:capacity_stored.find('(')])
-                electricity_stored = driver.find_element(By.XPATH, '//*[@id="unitgentab"]/tbody/tr[183]/td[3]').text[0:5]
+                electricity_stored = driver.find_element(By.XPATH, '//*[@id="unitgentab"]/tbody/tr[185]/td[3]').text[0:5]
                 electricity_stored = float(electricity_stored[0:electricity_stored.find('(')])
                 num += 1
                 # 確認是否擷取到數據 沒有最多retry三次
                 if not datetime == 'null' and not capacity_stored == 'null' and not electricity_stored == 'null':
                     if electricity_stored == 0.0:
-                        percent = capacity_stored/100
+                        percent = round(capacity_stored/100, 2)
                     else:
-                        percent = (capacity_stored/electricity_stored)*100
+                        percent = round((electricity_stored/capacity_stored)*100, 2)
                     break
         # 網頁擷取錯誤例外處理
         except:
@@ -310,7 +303,8 @@ class crawler:
     # 擷取交通部氣象局彰化縣鹿港鎮 1.地區 2.明天日期 3.時段 4.溫度 5.降雨機率
     def cwb_LugangInfo(self, strDate=datetime.datetime.today().date()):
         cwbinfoList = []
-        IDList = [['00', '00', '03'], ['03', '00', '03'], ['06', '06', '09'], ['09', '06', '09'], ['12', '12', '15'], ['15', '12', '15'], ['18', '18', '21'], ['21', '18', '21']]
+        PC3_D = '1' if datetime.datetime.now().hour >= 22 else '2'
+        IDList = [[PC3_D, '00', '00', '03'], [PC3_D, '03', '00', '03'], [PC3_D, '06', '06', '09'], [PC3_D, '09', '06', '09'], [PC3_D, '12', '12', '15'], [PC3_D, '15', '12', '15'], [PC3_D, '18', '18', '21'], [PC3_D, '21', '18', '21']]
         options = Options()
         options.add_argument('--headless')
         chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
@@ -327,22 +321,24 @@ class crawler:
             # 擷取次數
             num = 0
             cwbinfo = {'district': '彰化縣鹿港鎮', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
-            while num < 3:
-                driver.get("https://www.cwb.gov.tw/V8/C/W/Town/Town.html?TID=1000702")
-                driver.implicitly_wait(10)
-                time.sleep(2)
-                date = driver.find_element(By.ID, 'PC3_D2').text.replace("\n", " ")
-                period = driver.find_element(By.XPATH, '//*[@id="PC3_D2H' + IDList[i][0] + '"]/span').text
-                temperature = driver.find_element(By.XPATH, '//*[@headers="PC3_T PC3_D2 PC3_D2H' + IDList[i][
-                    0] + '"]/span[1]').text
-                PofP = driver.find_element(By.XPATH, '//*[@headers="PC3_Po PC3_D2 PC3_D2H' + IDList[i][1] + ' PC3_D2H' + IDList[i][2] + '"]').text
-                num += 1
-                # 確認是否擷取到數據 沒有最多retry三次
-                if not date == 'null' and not period == 'null' and not temperature == 'null' and not PofP == 'null':
-                    cwbinfo = {'district': '彰化縣鹿港鎮', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
-                    break
-            cwbinfoList.append(cwbinfo)
-        # 網頁擷取錯誤例外處理
+            try:
+                while num < 3:
+                    driver.get("https://www.cwb.gov.tw/V8/C/W/Town/Town.html?TID=1000702")
+                    driver.implicitly_wait(10)
+                    time.sleep(2)
+                    date = driver.find_element(By.ID, 'PC3_D' + IDList[i][0] + '').text.replace("\n", " ")
+                    period = driver.find_element(By.XPATH, '//*[@id="PC3_D' + IDList[i][0] + 'H' + IDList[i][1] + '"]/span').text
+                    temperature = driver.find_element(By.XPATH, '//*[@headers="PC3_T PC3_D' + IDList[i][0] + ' PC3_D' + IDList[i][0] + 'H' + IDList[i][1] + '"]/span[1]').text
+                    PofP = driver.find_element(By.XPATH, '//*[@headers="PC3_Po PC3_D' + IDList[i][0] + ' PC3_D' + IDList[i][0] + 'H' + IDList[i][2] + ' PC3_D' + IDList[i][0] + 'H' + IDList[i][3] + '"]').text
+                    num += 1
+                    # 確認是否擷取到數據 沒有最多retry三次
+                    if not date == 'null' and not period == 'null' and not temperature == 'null' and not PofP == 'null':
+                        cwbinfo = {'district': '彰化縣鹿港鎮', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
+                        break
+                cwbinfoList.append(cwbinfo)
+            # 網頁擷取錯誤例外處理
+            except:
+                pass
 
         data = cwbinfoList
         return data
@@ -350,7 +346,8 @@ class crawler:
     # 擷取交通部氣象局雲林縣崙背鄉 1.地區 2.明天日期 3.時段 4.溫度 5.降雨機率
     def cwb_LunbeiInfo(self, strDate=datetime.datetime.today().date()):
         cwbinfoList = []
-        IDList = [['00', '00', '03'], ['03', '00', '03'], ['06', '06', '09'], ['09', '06', '09'], ['12', '12', '15'], ['15', '12', '15'], ['18', '18', '21'], ['21', '18', '21']]
+        PC3_D = '1' if datetime.datetime.now().hour >= 22 else '2'
+        IDList = [[PC3_D, '00', '00', '03'], [PC3_D, '03', '00', '03'], [PC3_D, '06', '06', '09'], [PC3_D, '09', '06', '09'], [PC3_D, '12', '12', '15'], [PC3_D, '15', '12', '15'], [PC3_D, '18', '18', '21'], [PC3_D, '21', '18', '21']]
         options = Options()
         options.add_argument('--headless')
         chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
@@ -367,22 +364,24 @@ class crawler:
             # 擷取次數
             num = 0
             cwbinfo = {'district': '雲林縣崙背鄉', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
-            while num < 3:
-                driver.get("https://www.cwb.gov.tw/V8/C/W/Town/Town.html?TID=1000912")
-                driver.implicitly_wait(10)
-                time.sleep(2)
-                date = driver.find_element(By.ID, 'PC3_D2').text.replace("\n", " ")
-                period = driver.find_element(By.XPATH, '//*[@id="PC3_D2H' + IDList[i][0] + '"]/span').text
-                temperature = driver.find_element(By.XPATH, '//*[@headers="PC3_T PC3_D2 PC3_D2H' + IDList[i][
-                    0] + '"]/span[1]').text
-                PofP = driver.find_element(By.XPATH, '//*[@headers="PC3_Po PC3_D2 PC3_D2H' + IDList[i][1] + ' PC3_D2H' + IDList[i][2] + '"]').text
-                num += 1
-                # 確認是否擷取到數據 沒有最多retry三次
-                if not date == 'null' and not period == 'null' and not temperature == 'null' and not PofP == 'null':
-                    cwbinfo = {'district': '雲林縣崙背鄉', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
-                    break
-            cwbinfoList.append(cwbinfo)
-        # 網頁擷取錯誤例外處理
+            try:
+                while num < 3:
+                    driver.get("https://www.cwb.gov.tw/V8/C/W/Town/Town.html?TID=1000912")
+                    driver.implicitly_wait(10)
+                    time.sleep(2)
+                    date = driver.find_element(By.ID, 'PC3_D' + IDList[i][0] + '').text.replace("\n", " ")
+                    period = driver.find_element(By.XPATH, '//*[@id="PC3_D' + IDList[i][0] + 'H' + IDList[i][1] + '"]/span').text
+                    temperature = driver.find_element(By.XPATH, '//*[@headers="PC3_T PC3_D' + IDList[i][0] + ' PC3_D' + IDList[i][0] + 'H' + IDList[i][1] + '"]/span[1]').text
+                    PofP = driver.find_element(By.XPATH, '//*[@headers="PC3_Po PC3_D' + IDList[i][0] + ' PC3_D' + IDList[i][0] + 'H' +IDList[i][2] + ' PC3_D' + IDList[i][0] + 'H' + IDList[i][3] + '"]').text
+                    num += 1
+                    # 確認是否擷取到數據 沒有最多retry三次
+                    if not date == 'null' and not period == 'null' and not temperature == 'null' and not PofP == 'null':
+                        cwbinfo = {'district': '雲林縣崙背鄉', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
+                        break
+                cwbinfoList.append(cwbinfo)
+            # 網頁擷取錯誤例外處理
+            except:
+                pass
 
         data = cwbinfoList
         return data
@@ -390,7 +389,8 @@ class crawler:
 # 擷取交通部氣象局嘉義縣布袋鎮 1.地區 2.明天日期 3.時段 4.溫度 5.降雨機率
     def cwb_BudaiInfo(self, strDate=datetime.datetime.today().date()):
         cwbinfoList = []
-        IDList = [['00', '00', '03'], ['03', '00', '03'], ['06', '06', '09'], ['09', '06', '09'], ['12', '12', '15'], ['15', '12', '15'], ['18', '18', '21'], ['21', '18', '21']]
+        PC3_D = '1' if datetime.datetime.now().hour >= 22 else '2'
+        IDList = [[PC3_D, '00', '00', '03'], [PC3_D, '03', '00', '03'], [PC3_D, '06', '06', '09'], [PC3_D, '09', '06', '09'], [PC3_D, '12', '12', '15'], [PC3_D, '15', '12', '15'], [PC3_D, '18', '18', '21'], [PC3_D, '21', '18', '21']]
         options = Options()
         options.add_argument('--headless')
         chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
@@ -407,22 +407,24 @@ class crawler:
             # 擷取次數
             num = 0
             cwbinfo = {'district': '嘉義縣布袋鎮', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
-            while num < 3:
-                driver.get("https://www.cwb.gov.tw/V8/C/W/Town/Town.html?TID=1001003")
-                driver.implicitly_wait(10)
-                time.sleep(2)
-                date = driver.find_element(By.ID, 'PC3_D2').text.replace("\n", " ")
-                period = driver.find_element(By.XPATH, '//*[@id="PC3_D2H' + IDList[i][0] + '"]/span').text
-                temperature = driver.find_element(By.XPATH, '//*[@headers="PC3_T PC3_D2 PC3_D2H' + IDList[i][
-                    0] + '"]/span[1]').text
-                PofP = driver.find_element(By.XPATH, '//*[@headers="PC3_Po PC3_D2 PC3_D2H' + IDList[i][1] + ' PC3_D2H' + IDList[i][2] + '"]').text
-                num += 1
-                # 確認是否擷取到數據 沒有最多retry三次
-                if not date == 'null' and not period == 'null' and not temperature == 'null' and not PofP == 'null':
-                    cwbinfo = {'district': '嘉義縣布袋鎮', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
-                    break
-            cwbinfoList.append(cwbinfo)
-        # 網頁擷取錯誤例外處理
+            try:
+                while num < 3:
+                    driver.get("https://www.cwb.gov.tw/V8/C/W/Town/Town.html?TID=1001003")
+                    driver.implicitly_wait(10)
+                    time.sleep(2)
+                    date = driver.find_element(By.ID, 'PC3_D' + IDList[i][0] + '').text.replace("\n", " ")
+                    period = driver.find_element(By.XPATH, '//*[@id="PC3_D' + IDList[i][0] + 'H' + IDList[i][1] + '"]/span').text
+                    temperature = driver.find_element(By.XPATH, '//*[@headers="PC3_T PC3_D' + IDList[i][0] + ' PC3_D' + IDList[i][0] + 'H' + IDList[i][1] + '"]/span[1]').text
+                    PofP = driver.find_element(By.XPATH, '//*[@headers="PC3_Po PC3_D' + IDList[i][0] + ' PC3_D' + IDList[i][0] + 'H' +IDList[i][2] + ' PC3_D' + IDList[i][0] + 'H' + IDList[i][3] + '"]').text
+                    num += 1
+                    # 確認是否擷取到數據 沒有最多retry三次
+                    if not date == 'null' and not period == 'null' and not temperature == 'null' and not PofP == 'null':
+                        cwbinfo = {'district': '嘉義縣布袋鎮', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
+                        break
+                cwbinfoList.append(cwbinfo)
+            # 網頁擷取錯誤例外處理
+            except:
+                pass
 
         data = cwbinfoList
         return data
@@ -430,7 +432,8 @@ class crawler:
 # 擷取交通部氣象局臺南市七股區 1.地區 2.明天日期 3.時段 4.溫度 5.降雨機率
     def cwb_QiguInfo(self, strDate=datetime.datetime.today().date()):
         cwbinfoList = []
-        IDList = [['00', '00', '03'], ['03', '00', '03'], ['06', '06', '09'], ['09', '06', '09'], ['12', '12', '15'], ['15', '12', '15'], ['18', '18', '21'], ['21', '18', '21']]
+        PC3_D = '1' if datetime.datetime.now().hour >= 22 else '2'
+        IDList = [[PC3_D, '00', '00', '03'], [PC3_D, '03', '00', '03'], [PC3_D, '06', '06', '09'], [PC3_D, '09', '06', '09'], [PC3_D, '12', '12', '15'], [PC3_D, '15', '12', '15'], [PC3_D, '18', '18', '21'], [PC3_D, '21', '18', '21']]
         options = Options()
         options.add_argument('--headless')
         chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
@@ -447,22 +450,24 @@ class crawler:
             # 擷取次數
             num = 0
             cwbinfo = {'district': '臺南市七股區', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
-            while num < 3:
-                driver.get("https://www.cwb.gov.tw/V8/C/W/Town/Town.html?TID=6701500")
-                driver.implicitly_wait(10)
-                time.sleep(2)
-                date = driver.find_element(By.ID, 'PC3_D2').text.replace("\n", " ")
-                period = driver.find_element(By.XPATH, '//*[@id="PC3_D2H' + IDList[i][0] + '"]/span').text
-                temperature = driver.find_element(By.XPATH, '//*[@headers="PC3_T PC3_D2 PC3_D2H' + IDList[i][
-                    0] + '"]/span[1]').text
-                PofP = driver.find_element(By.XPATH, '//*[@headers="PC3_Po PC3_D2 PC3_D2H' + IDList[i][1] + ' PC3_D2H' + IDList[i][2] + '"]').text
-                num += 1
-                # 確認是否擷取到數據 沒有最多retry三次
-                if not date == 'null' and not period == 'null' and not temperature == 'null' and not PofP == 'null':
-                    cwbinfo = {'district': '臺南市七股區', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
-                    break
-            cwbinfoList.append(cwbinfo)
-        # 網頁擷取錯誤例外處理
+            try:
+                while num < 3:
+                    driver.get("https://www.cwb.gov.tw/V8/C/W/Town/Town.html?TID=6701500")
+                    driver.implicitly_wait(10)
+                    time.sleep(2)
+                    date = driver.find_element(By.ID, 'PC3_D' + IDList[i][0] + '').text.replace("\n", " ")
+                    period = driver.find_element(By.XPATH, '//*[@id="PC3_D' + IDList[i][0] + 'H' + IDList[i][1] + '"]/span').text
+                    temperature = driver.find_element(By.XPATH, '//*[@headers="PC3_T PC3_D' + IDList[i][0] + ' PC3_D' + IDList[i][0] + 'H' + IDList[i][1] + '"]/span[1]').text
+                    PofP = driver.find_element(By.XPATH, '//*[@headers="PC3_Po PC3_D' + IDList[i][0] + ' PC3_D' + IDList[i][0] + 'H' +IDList[i][2] + ' PC3_D' + IDList[i][0] + 'H' + IDList[i][3] + '"]').text
+                    num += 1
+                    # 確認是否擷取到數據 沒有最多retry三次
+                    if not date == 'null' and not period == 'null' and not temperature == 'null' and not PofP == 'null':
+                        cwbinfo = {'district': '臺南市七股區', 'date': date, 'period': period, 'temperature': temperature, 'PofP': PofP}
+                        break
+                cwbinfoList.append(cwbinfo)
+            # 網頁擷取錯誤例外處理
+            except:
+                pass
 
         data = cwbinfoList
         return data
