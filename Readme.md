@@ -42,6 +42,7 @@
     $ npm install @mui/x-data-grid
     $ npm install react-circular-progressbar  
     $ npm install recharts
+    $ npm install socket.io-client
 
 * Execute
     $ npm install 

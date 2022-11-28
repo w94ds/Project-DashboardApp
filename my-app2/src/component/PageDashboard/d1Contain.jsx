@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import webSocket from 'socket.io-client'
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,6 +10,8 @@ import Paper from '@mui/material/Paper';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
 const D1Contain = () => {
+
+    //#region Property
     // Testing
     const [isId, setIsId] = useState();
     const [isName, setIsName] = useState();
@@ -79,6 +82,7 @@ const D1Contain = () => {
     let FriCBG = document.getElementById('FriCBG')
     let SatCBG = document.getElementById('SatCBG')
     let SunCBG = document.getElementById('SunCBG')
+    //#endregion
 
     //#region Event
     const FetchClick = () => {
@@ -231,7 +235,7 @@ const D1Contain = () => {
         setMonLP(jsonData[0].load)
         setMonCC(jsonData[0].value)
         setMonCCR(jsonData[0].percent)
-        
+
         setTueSP(jsonData[1].supply)
         setTueLP(jsonData[1].load)
         setTueCC(jsonData[1].value)
@@ -313,6 +317,53 @@ const D1Contain = () => {
     ]
     //#endregion
 
+    //#region WebSocket
+    const [ws, setWs] = useState(null)
+
+    useEffect(() => {
+        if (ws) {
+            console.log('success connect!')
+            initWebSocket()
+        }
+
+        window.addEventListener('load', PageLoad)
+        console.log('- Use Effect -')
+    }, [ws]);
+
+    const PageLoad = () => {
+        console.log('PageLoad')
+
+        connectWebSocket()
+
+        setInterval(() => {
+            console.log('Here')
+        }, 1500);
+    }
+
+    const connectWebSocket = () => {
+        setWs(webSocket('http://localhost:3001'))
+    }
+
+    const initWebSocket = () => {
+        ws.on('getMessage', message => {
+            console.log('getMessage', message)
+        })
+
+        ws.on('getMessageAll', message => {
+            console.log('getMessageAll', message)
+        })
+
+        ws.on('getMessageLess', message => {
+            console.log('getMessageLess', message)
+        })
+    }
+
+    // const sendMessage = (name) => {
+    //     ws.emit(name, 'MSG')
+    //     console.log('Send MSG -> ')
+    // }
+    //#endregion
+    
     return (
         <div className="d1Contain">
 
@@ -506,12 +557,12 @@ const D1Contain = () => {
                     </TableContainer>
                 </div>
 
-                <div className='d1Contain-Contain-Grid15'>
+                {/* <div className='d1Contain-Contain-Grid15'>
 
-                </div>
+                </div> */}
 
                 <div className='d1Contain-Contain-GridTest'>
-                    {/* <button onClick={FetchClick}>Test</button> */}
+                    <button onClick={FetchClick}>Fetch Test</button>
                     <p>{isId}</p>
                     <p>{isName}</p>
                 </div>
@@ -520,4 +571,5 @@ const D1Contain = () => {
         </div>
     )
 }
+
 export default D1Contain;
