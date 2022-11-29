@@ -43,45 +43,43 @@ const D1Contain = () => {
     const [MonLP, setMonLP] = useState(0);
     const [MonCC, setMonCC] = useState(0);
     const [MonCCR, setMonCCR] = useState(0);
+    const [MonLight, setMonLight] = useState('black');
 
     const [TueSP, setTueSP] = useState(0);
     const [TueLP, setTueLP] = useState(0);
     const [TueCC, setTueCC] = useState(0);
     const [TueCCR, setTueCCR] = useState(0);
+    const [TueLight, setTueLight] = useState('black');
 
     const [WedSP, setWedSP] = useState(0);
     const [WedLP, setWedLP] = useState(0);
     const [WedCC, setWedCC] = useState(0);
     const [WedCCR, setWedCCR] = useState(0);
+    const [WedLight, setWedLight] = useState('black');
 
     const [ThuSP, setThuSP] = useState(0);
     const [ThuLP, setThuLP] = useState(0);
     const [ThuCC, setThuCC] = useState(0);
     const [ThuCCR, setThuCCR] = useState(0);
+    const [ThuLight, setThuLight] = useState('black');
 
     const [FriSP, setFriSP] = useState(0);
     const [FriLP, setFriLP] = useState(0);
     const [FriCC, setFriCC] = useState(0);
     const [FriCCR, setFriCCR] = useState(0);
+    const [FriLight, setFriLight] = useState('black');
 
     const [SatSP, setSatSP] = useState(0);
     const [SatLP, setSatLP] = useState(0);
     const [SatCC, setSatCC] = useState(0);
     const [SatCCR, setSatCCR] = useState(0);
+    const [SatLight, setSatLight] = useState('black');
 
     const [SunSP, setSunSP] = useState(0);
     const [SunLP, setSunLP] = useState(0);
     const [SunCC, setSunCC] = useState(0);
     const [SunCCR, setSunCCR] = useState(0);
-
-    // Light 
-    let MonCBG = document.getElementById('MonCBG')
-    let TueCBG = document.getElementById('TueCBG')
-    let WedCBG = document.getElementById('WedCBG')
-    let ThuCBG = document.getElementById('ThuCBG')
-    let FriCBG = document.getElementById('FriCBG')
-    let SatCBG = document.getElementById('SatCBG')
-    let SunCBG = document.getElementById('SunCBG')
+    const [SunLight, setSunLight] = useState('black');
     //#endregion
 
     //#region Event
@@ -128,14 +126,14 @@ const D1Contain = () => {
             .then((json) => {
                 jsonData = json
                 console.log(jsonData)
-                console.log(jsonData.dataTimeStampP1)
-                console.log(jsonData.dataTimeStampP2)
-                console.log(jsonData.latest_load)
-                console.log(jsonData.latest_load_perc)
-                console.log(jsonData.lighttext)
-                console.log(jsonData.load_forecast_max)
-                console.log(jsonData.load_forecast_max_perc)
-                console.log(jsonData.supply_arranged_max)
+                // console.log(jsonData.dataTimeStampP1)
+                // console.log(jsonData.dataTimeStampP2)
+                // console.log(jsonData.latest_load)
+                // console.log(jsonData.latest_load_perc)
+                // console.log(jsonData.lighttext)
+                // console.log(jsonData.load_forecast_max)
+                // console.log(jsonData.load_forecast_max_perc)
+                // console.log(jsonData.supply_arranged_max)
                 UpdateTodayInfoUI()
             })
             .then(
@@ -163,9 +161,9 @@ const D1Contain = () => {
             .then((json) => {
                 jsonData = json
                 console.log(jsonData)
-                console.log(jsonData.ydaytime)
-                console.log(jsonData.load_max_yday)
-                console.log(jsonData.rsv_perc_yday)
+                // console.log(jsonData.ydaytime)
+                // console.log(jsonData.load_max_yday)
+                // console.log(jsonData.rsv_perc_yday)
                 UpdateLastDayInfoUI()
             })
             .then(
@@ -189,10 +187,10 @@ const D1Contain = () => {
             .then((json) => {
                 jsonData = json
                 console.log(jsonData)
-                console.log(jsonData.datetime)
-                console.log(jsonData.capacity_stored)
-                console.log(jsonData.electricity_stored)
-                console.log(jsonData.percent)
+                // console.log(jsonData.datetime)
+                // console.log(jsonData.capacity_stored)
+                // console.log(jsonData.electricity_stored)
+                // console.log(jsonData.percent)
                 UpdateStatusInfoUI()
             })
             .then(
@@ -217,10 +215,10 @@ const D1Contain = () => {
             .then((json) => {
                 jsonData = json
                 console.log(jsonData)
-                console.log(jsonData[0].supply)
-                console.log(jsonData[0].load)
-                console.log(jsonData[0].value)
-                console.log(jsonData[0].percent)
+                // console.log(jsonData[0].supply)
+                // console.log(jsonData[0].load)
+                // console.log(jsonData[0].value)
+                // console.log(jsonData[0].percent)
                 UpdateWeekDataInfoUI()
             })
             .then(
@@ -266,23 +264,21 @@ const D1Contain = () => {
         setSunCC(jsonData[6].value)
         setSunCCR(jsonData[6].percent)
 
-        // if (jsonData[0].lightState)
+        console.log('MonState : ', jsonData[0].lightState)
+        console.log('TueState : ', jsonData[1].lightState)
+        console.log('WedState : ', jsonData[2].lightState)
+        console.log('ThuState : ', jsonData[3].lightState)
+        console.log('FriState : ', jsonData[4].lightState)
+        console.log('SatState : ', jsonData[5].lightState)
+        console.log('SunState : ', jsonData[6].lightState)
 
-        console.log('MonState : ' , jsonData[0].lightState)
-        console.log('TueState : ' , jsonData[1].lightState)
-        console.log('WedState : ' , jsonData[2].lightState)
-        console.log('ThuState : ' , jsonData[3].lightState)
-        console.log('FriState : ' , jsonData[4].lightState)
-        console.log('SatState : ' , jsonData[5].lightState)
-        console.log('SunState : ' , jsonData[6].lightState)
-
-        MonCBG.style.background = jsonData[0].lightState
-        TueCBG.style.background = jsonData[1].lightState
-        WedCBG.style.background = jsonData[2].lightState
-        ThuCBG.style.background = jsonData[3].lightState
-        FriCBG.style.background = jsonData[4].lightState
-        SatCBG.style.background = jsonData[5].lightState
-        SunCBG.style.background = jsonData[6].lightState
+        setMonLight(jsonData[0].lightState)
+        setTueLight(jsonData[1].lightState)
+        setWedLight(jsonData[2].lightState)
+        setThuLight(jsonData[3].lightState)
+        setFriLight(jsonData[4].lightState)
+        setSatLight(jsonData[5].lightState)
+        setSunLight(jsonData[6].lightState)
     }
     //#endregion
 
@@ -325,13 +321,13 @@ const D1Contain = () => {
         createDataDate(<h3>被轉容量</h3>, <h3>{MonCC}</h3>, <h3>{TueCC}</h3>, <h3>{WedCC}</h3>, <h3>{ThuCC}</h3>, <h3>{FriCC}</h3>, <h3>{SatCC}</h3>, <h3>{SunCC}</h3>),
         createDataDate(<h3>被轉容量率</h3>, <h3>{MonCCR}</h3>, <h3>{TueCCR}</h3>, <h3>{WedCCR}</h3>, <h3>{ThuCCR}</h3>, <h3>{FriCCR}</h3>, <h3>{SatCCR}</h3>, <h3>{SunCCR}</h3>),
         createDataDate(<h3>被轉狀態</h3>,
-            <canvas className="point" id="MonCBG"></canvas>,
-            <canvas className="point" id="TueCBG"></canvas>,
-            <canvas className="point" id="WedCBG"></canvas>,
-            <canvas className="point" id="ThuCBG"></canvas>,
-            <canvas className="point" id="FriCBG"></canvas>,
-            <canvas className="point" id="SatCBG"></canvas>,
-            <canvas className="point" id="SunCBG"></canvas>)
+            <canvas className="point" id="MonCBG" style={{ backgroundColor: MonLight }}></canvas>,
+            <canvas className="point" id="TueCBG" style={{ backgroundColor: TueLight }}></canvas>,
+            <canvas className="point" id="WedCBG" style={{ backgroundColor: WedLight }}></canvas>,
+            <canvas className="point" id="ThuCBG" style={{ backgroundColor: ThuLight }}></canvas>,
+            <canvas className="point" id="FriCBG" style={{ backgroundColor: FriLight }}></canvas>,
+            <canvas className="point" id="SatCBG" style={{ backgroundColor: SatLight }}></canvas>,
+            <canvas className="point" id="SunCBG" style={{ backgroundColor: SunLight }}></canvas>)
     ]
     //#endregion
 
@@ -360,7 +356,7 @@ const D1Contain = () => {
 
         setInterval(() => {
             console.log('Here')
-        }, 1500);
+        }, 600000);
     }
 
     const connectWebSocket = () => {
@@ -386,7 +382,7 @@ const D1Contain = () => {
     //     console.log('Send MSG -> ')
     // }
     //#endregion
-    
+
     return (
         <div className="d1Contain">
 
@@ -536,22 +532,27 @@ const D1Contain = () => {
 
                 <div className='d1Contain-Contain-Grid9'>
                     <h3>供電充裕</h3>
+                    <h4>被轉容量率大於等於10%</h4>
                 </div>
 
                 <div className='d1Contain-Contain-Grid10'>
                     <h3>供電吃緊</h3>
+                    <h4>被轉容量率10%~6%間</h4>
                 </div>
 
                 <div className='d1Contain-Contain-Grid11'>
                     <h3>供電警戒</h3>
+                    <h4>被轉容量率小於等於6%</h4>
                 </div>
 
                 <div className='d1Contain-Contain-Grid12'>
                     <h3>限電警戒</h3>
+                    <h4>被轉容量90萬千瓦以下</h4>
                 </div>
 
                 <div className='d1Contain-Contain-Grid13'>
                     <h3>限電準備</h3>
+                    <h4>被轉容量50萬千瓦以下</h4>
                 </div>
 
                 <div className='d1Contain-Contain-Grid14'>
