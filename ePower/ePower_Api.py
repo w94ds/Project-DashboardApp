@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Nov 18 11:32:01 2022
+Modified on 2022-11-30
 
 @author: User
 """
@@ -9,13 +10,27 @@ from flask import Flask, jsonify
 from flask import request
 from flask_cors import CORS
 import datetime
-#import json
+
+from flask_socketio import SocketIO #, emit
+#import configs
+
 
 from crawler import crawler as CrawlerReq
 
 
 app = Flask(__name__)
+#app.config.from_object(configs)
+#app.config['SECRET_KEY'] = 'secret!'
+#socketio = SocketIO(app)
+
 CORS(app)
+
+
+########## socket_io #####
+#@app.route('/ping_test')
+#def pyPing():
+#    socketio.emit('ping event', {'data': 42}, namespace='/chat')
+
 
 ########## read #####
 
@@ -78,44 +93,32 @@ def pyGet_ETP_Deal_Supplemental():
 @app.route('/Get_CWB_Weather2FC', methods=['POST'])
 def pyGet_CWB_Weather2FC():
     tnow_local =  datetime.datetime.today().date()
-    #area_req = json.loads(request.get_json())
     area_req = request.get_json()       
     area_id = area_req.get("area")
-    print (tnow_local)
-    print(area_req)
-    print (area_id)
-
-    #area_req = json.loads (request)
     weather2req ={"weather":"none"}    
 
     if (area_id == 'Lukang'):
         #print ("Lukang----")
         weather2req = CrawlerReq.cwb_LugangInfo(tnow_local)
     elif (area_id == 'Lunbei'):
-        print ("Lunbei---")
+        #print ("Lunbei---")
         weather2req = CrawlerReq.cwb_LunbeiInfo(tnow_local)
     elif (area_id == 'Budai'):
-        print ("Budai---")
+        #print ("Budai---")
         weather2req = CrawlerReq.cwb_BudaiInfo(tnow_local)
     elif (area_id == 'Qigu'):
-        print ("Qigu---")
+        #print ("Qigu---")
         weather2req = CrawlerReq.cwb_QiguInfo(tnow_local)
     else:
         print ("error")
         return request.get_json()
 
-    print (weather2req)
-    #print('\n')
-    #print(request.get_json())
-    #print('Post with Para Success!')
-    #print('\n')
-    #response = request
-    #return request.get_json()
-    #json.dumps()
     return jsonify(weather2req)
+
 
 if __name__ == "__main__":
     app.run()
+#    socketio.run(app, debug=True)
 
     # try:
         # print(Fore.RED + 'App Run !' + Fore.WHITE)

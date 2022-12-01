@@ -389,7 +389,7 @@ const D1Contain = () => {
             <div className='d1Contain-Contain'>
                 <div className='d1Contain-Contain-Title1'>
                     <RefreshIcon className="nbmicon" onClick={TodayInfoFetchClick} />
-                    <h3>今日電力資訊 : {Date} - {Time}</h3>
+                    <h3>今日電力資訊 : {Date} {Time}</h3>
                 </div>
 
                 <div className='d1Contain-Contain-Title2'>

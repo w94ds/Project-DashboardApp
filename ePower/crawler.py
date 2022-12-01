@@ -134,15 +134,15 @@ class crawler:
                     # 確認是否擷取到數據 沒有最多retry三次
                     if not dateStr == 'null' and not dayStr == 'null' and not supply == 'null' and not load == 'null' and not value == 'null' and not percent == 'null':
                         if percent > 10:
-                            lightState = 'green'
+                            lightState = '#00DD00'
                         elif 10 > percent >= 6:
-                            lightState = 'yellow'
+                            lightState = '#FFFF00'
                         elif percent < 6:
-                            lightState = 'orange'
+                            lightState = '#FFA500'
                         elif 90 > value >= 50:
-                            lightState = 'red'
+                            lightState = '#FF0000'
                         elif value < 50:
-                            lightState = 'gray'
+                            lightState = '#444444'
                         data.append({'datetime': datetime, 'dateStr': dateStr, 'dayStr': dayStr, 'supply': supply, 'load': load, 'value': value, 'percent': str(percent) + "%", 'lightState': lightState})
                         break
                 # 確認是否擷取到數據 沒有最多retry三次
@@ -471,3 +471,30 @@ class crawler:
 
         data = cwbinfoList
         return data
+
+    # 擷取今日電力供需資訊函數 1.備轉容量 2.備轉容量率
+    def electricity_today(self, strDate=datetime.datetime.today().date()):
+        # 備轉容量率
+        reserve = 'null'
+        # 擷取次數
+        num = 0
+        try:
+            while num < 3:
+                options = Options()
+                options.add_argument('--headless')
+                chrome_service = fs.Service(executable_path=ChromeDriverManager().install())
+                driver = webdriver.Chrome(service=chrome_service, options=options)
+                driver.get("https://www.taipower.com.tw/d006/loadGraph/loadGraph/load_reserve_.html")
+                driver.implicitly_wait(10)
+                time.sleep(2)
+                reserve = driver.find_element(By.XPATH, '//*[@id="reserve"]/span').text
+                num += 1
+                # 確認是否擷取到數據 沒有最多retry三次
+                if not reserve == 'null':
+                    break
+        # 網頁擷取錯誤例外處理
+        except:
+            pass
+
+        date = {'reserve': reserve}
+        return date
