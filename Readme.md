@@ -55,5 +55,31 @@
 ## API Spec
 > Dashboard1
 ```
+[GET]
 Get_TPC_PowerNeed_Pre
+Get_TPC_PowerNeed_Now
+Get_TPC_PowerNeed_Post
+Get_TPC_SolarInfo
+```
+
+>Dashboard2
+```
+[GET]
+[POST]
+```
+
+## Ecexcute
+> Frontend
+```
+$ npm start [my-app2]
+```
+
+> Backend
+```
+$ python3 ePower_Api
+```
+
+> Testing 
+```
+$ node app.js
 ```
