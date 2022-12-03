@@ -26,6 +26,7 @@ const D1Contain = () => {
     const [MP, setMP] = useState(0);
     const [UR, setUR] = useState(0);
     const [MUR, setMUR] = useState(0);
+    const [TodayLight, setTodayLight] = useState('black');
 
     // Basic Data
     const [LastDate, setLastDate] = useState(0);
@@ -134,6 +135,7 @@ const D1Contain = () => {
                 // console.log(jsonData.load_forecast_max)
                 // console.log(jsonData.load_forecast_max_perc)
                 // console.log(jsonData.supply_arranged_max)
+                // console.log(jsonData.lightState)
                 UpdateTodayInfoUI()
             })
             .then(
@@ -151,6 +153,7 @@ const D1Contain = () => {
         setMP(jsonData.supply_arranged_max)
         setUR(jsonData.latest_load_perc)
         setMUR(jsonData.load_forecast_max_perc)
+        setTodayLight(jsonData.lightState)
     }
 
     const LastDayInfoFetchClick = () => {
@@ -264,13 +267,13 @@ const D1Contain = () => {
         setSunCC(jsonData[6].value)
         setSunCCR(jsonData[6].percent)
 
-        console.log('MonState : ', jsonData[0].lightState)
-        console.log('TueState : ', jsonData[1].lightState)
-        console.log('WedState : ', jsonData[2].lightState)
-        console.log('ThuState : ', jsonData[3].lightState)
-        console.log('FriState : ', jsonData[4].lightState)
-        console.log('SatState : ', jsonData[5].lightState)
-        console.log('SunState : ', jsonData[6].lightState)
+        // console.log('MonState : ', jsonData[0].lightState)
+        // console.log('TueState : ', jsonData[1].lightState)
+        // console.log('WedState : ', jsonData[2].lightState)
+        // console.log('ThuState : ', jsonData[3].lightState)
+        // console.log('FriState : ', jsonData[4].lightState)
+        // console.log('SatState : ', jsonData[5].lightState)
+        // console.log('SunState : ', jsonData[6].lightState)
 
         setMonLight(jsonData[0].lightState)
         setTueLight(jsonData[1].lightState)
@@ -283,13 +286,15 @@ const D1Contain = () => {
     //#endregion
 
     //#region DataHandler
-    function createDataBasic(CurPower, ExpPower, MaxPower, UseRate, MaxUseRate) {
-        return { CurPower, ExpPower, MaxPower, UseRate, MaxUseRate };
+    function createDataBasic(CurPower, ExpPower, MaxPower, UseRate, MaxUseRate, Lightstate) {
+        return { CurPower, ExpPower, MaxPower, UseRate, MaxUseRate, Lightstate };
     }
 
     const rowsBasic = [
         // CP , EP , MP , UR , MUR
-        createDataBasic(<h3>{CP}</h3>, <h3>{EP}</h3>, <h3>{MP}</h3>, <h3>{UR}</h3>, <h3>{MUR}</h3>)
+        createDataBasic(<h3>{CP}</h3>, <h3>{EP}</h3>, <h3>{MP}</h3>, <h3>{UR}</h3>, <h3>{MUR}</h3>,
+            <canvas className="point" style={{ backgroundColor: TodayLight }}></canvas>,
+        )
     ]
 
     function createDataBasicLast(LastMaxPower, LastMaxUseRate) {
@@ -321,7 +326,7 @@ const D1Contain = () => {
         createDataDate(<h3>被轉容量</h3>, <h3>{MonCC}</h3>, <h3>{TueCC}</h3>, <h3>{WedCC}</h3>, <h3>{ThuCC}</h3>, <h3>{FriCC}</h3>, <h3>{SatCC}</h3>, <h3>{SunCC}</h3>),
         createDataDate(<h3>被轉容量率</h3>, <h3>{MonCCR}</h3>, <h3>{TueCCR}</h3>, <h3>{WedCCR}</h3>, <h3>{ThuCCR}</h3>, <h3>{FriCCR}</h3>, <h3>{SatCCR}</h3>, <h3>{SunCCR}</h3>),
         createDataDate(<h3>被轉狀態</h3>,
-            <canvas className="point" id="MonCBG" style={{ backgroundColor: MonLight }}></canvas>,
+            <canvas className="point"  style={{ backgroundColor: MonLight }}></canvas>,
             <canvas className="point" id="TueCBG" style={{ backgroundColor: TueLight }}></canvas>,
             <canvas className="point" id="WedCBG" style={{ backgroundColor: WedLight }}></canvas>,
             <canvas className="point" id="ThuCBG" style={{ backgroundColor: ThuLight }}></canvas>,
@@ -388,8 +393,8 @@ const D1Contain = () => {
 
             <div className='d1Contain-Contain'>
                 <div className='d1Contain-Contain-Title1'>
-                    <RefreshIcon className="nbmicon" onClick={TodayInfoFetchClick} />
-                    <h3>今日電力資訊 : {Date} {Time}</h3>
+                    <RefreshIcon className="nbmicon" onClick={LastDayInfoFetchClick} />
+                    <h3>昨日電力資訊 : {LastDate}</h3>
                 </div>
 
                 <div className='d1Contain-Contain-Title2'>
@@ -398,18 +403,17 @@ const D1Contain = () => {
                 </div>
 
                 <div className='d1Contain-Contain-Title3'>
+                    <RefreshIcon className="nbmicon" onClick={TodayInfoFetchClick} />
+                    <h3>今日電力資訊 : {Date} {Time}</h3>
+                </div>
+
+                <div className='d1Contain-Contain-Title4'>
                     <RefreshIcon className="nbmicon" onClick={WeekDataInfoFetchClick} />
                     <h3>本週電力資訊</h3>
                 </div>
 
-                <div className='d1Contain-Contain-Title4'>
-                    {/* <RefreshIcon className="nbmicon" onClick={FetchClick} /> */}
-                    <h3>燈號說明</h3>
-                </div>
-
                 <div className='d1Contain-Contain-Title5'>
-                    <RefreshIcon className="nbmicon" onClick={LastDayInfoFetchClick} />
-                    <h3>昨日電力資訊 : {LastDate}</h3>
+                    <h3>燈號說明</h3>
                 </div>
 
                 <div className='d1Contain-Contain-Grid1'>
@@ -419,29 +423,24 @@ const D1Contain = () => {
                         >
                             <TableHead>
                                 <TableRow>
-                                    <TableCell align="center"><h3 >目前用電量(kWh)</h3></TableCell>
-                                    <TableCell align="center"><h3>預估最高用電(kWh)</h3></TableCell>
-                                    <TableCell align="center"><h3>最大供電能力(kWh)</h3></TableCell>
-                                    <TableCell align="center"><h3>使用率(%)</h3></TableCell>
-                                    <TableCell align="center"><h3>尖峰使用率(%)</h3></TableCell>
+                                    <TableCell align="center"><h3>昨日最高用電(kWh)</h3></TableCell>
+                                    <TableCell align="center"><h3>昨日尖峰使用率(%)</h3></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rowsBasic.map((row) => (
+                                {rowsBasicLast.map((row) => (
                                     <TableRow
                                     // key={row.name}
                                     // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                     >
-                                        <TableCell align="center">{row.CurPower}</TableCell>
-                                        <TableCell align="center">{row.ExpPower}</TableCell>
-                                        <TableCell align="center">{row.MaxPower}</TableCell>
-                                        <TableCell align="center">{row.UseRate}</TableCell>
-                                        <TableCell align="center">{row.MaxUseRate}</TableCell>
+                                        <TableCell align="center">{row.LastMaxPower}</TableCell>
+                                        <TableCell align="center">{row.LastMaxUseRate}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
                         </Table>
                     </TableContainer>
+
                 </div>
 
                 <div className='d1Contain-Contain-Grid2'>
@@ -479,6 +478,40 @@ const D1Contain = () => {
                         >
                             <TableHead>
                                 <TableRow>
+                                    <TableCell align="center"><h3 >目前用電量(kWh)</h3></TableCell>
+                                    <TableCell align="center"><h3>預估最高用電(kWh)</h3></TableCell>
+                                    <TableCell align="center"><h3>最大供電能力(kWh)</h3></TableCell>
+                                    <TableCell align="center"><h3>使用率(%)</h3></TableCell>
+                                    <TableCell align="center"><h3>尖峰使用率(%)</h3></TableCell>
+                                    <TableCell align="center"><h3>被轉狀態</h3></TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {rowsBasic.map((row) => (
+                                    <TableRow
+                                    // key={row.name}
+                                    // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                    >
+                                        <TableCell align="center">{row.CurPower}</TableCell>
+                                        <TableCell align="center">{row.ExpPower}</TableCell>
+                                        <TableCell align="center">{row.MaxPower}</TableCell>
+                                        <TableCell align="center">{row.UseRate}</TableCell>
+                                        <TableCell align="center">{row.MaxUseRate}</TableCell>
+                                        <TableCell align="center">{row.Lightstate}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+
+                <div className='d1Contain-Contain-Grid4'>
+                    <TableContainer component={Paper} className='Table'>
+                        <Table
+                        // sx={{ minWidth: 650 }} aria-label="simple table"
+                        >
+                            <TableHead>
+                                <TableRow>
                                     <TableCell></TableCell>
                                     <TableCell align="center"><h3>一</h3></TableCell>
                                     <TableCell align="center"><h3>二</h3></TableCell>
@@ -508,25 +541,26 @@ const D1Contain = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
+
                 </div>
 
-                <div className='d1Contain-Contain-Grid4'>
+                <div className='d1Contain-Contain-Light1'>
                     <canvas className="point"></canvas>
                 </div>
 
-                <div className='d1Contain-Contain-Grid5'>
+                <div className='d1Contain-Contain-Light2'>
                     <canvas className="point"></canvas>
                 </div>
 
-                <div className='d1Contain-Contain-Grid6'>
+                <div className='d1Contain-Contain-Light3'>
                     <canvas className="point"></canvas>
                 </div>
 
-                <div className='d1Contain-Contain-Grid7'>
+                <div className='d1Contain-Contain-Light4'>
                     <canvas className="point"></canvas>
                 </div>
 
-                <div className='d1Contain-Contain-Grid8'>
+                <div className='d1Contain-Contain-Light5'>
                     <canvas className="point"></canvas>
                 </div>
 
@@ -555,34 +589,6 @@ const D1Contain = () => {
                     <h4>被轉容量50萬千瓦以下</h4>
                 </div>
 
-                <div className='d1Contain-Contain-Grid14'>
-                    <TableContainer component={Paper} className='Table'>
-                        <Table
-                        // sx={{ minWidth: 650 }} aria-label="simple table"
-                        >
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell align="center"><h3>昨日最高用電(kWh)</h3></TableCell>
-                                    <TableCell align="center"><h3>昨日尖峰使用率(%)</h3></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rowsBasicLast.map((row) => (
-                                    <TableRow
-                                    // key={row.name}
-                                    // sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                                    >
-                                        <TableCell align="center">{row.LastMaxPower}</TableCell>
-                                        <TableCell align="center">{row.LastMaxUseRate}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </div>
-
-                {/* <div className='d1Contain-Contain-Grid15'>
-                </div> */}
 
                 <div className='d1Contain-Contain-GridTest'>
                     <button onClick={FetchClick}>Fetch Test</button>
