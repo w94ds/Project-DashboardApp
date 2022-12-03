@@ -11,7 +11,7 @@ import json
 #crawler class 爬蟲套件
 class crawler:
     #@staticmethod
-    #擷取今日電力資訊 1.日期 2.更新時間 3.目前用電量 4.使用率 5.預估最高用電 6.尖峰使用率 7.今日最大供電能力 8.供電狀況
+    #擷取今日電力資訊 1.日期 2.更新時間 3.目前用電量 4.使用率 5.預估最高用電 6.尖峰使用率 7.今日最大供電能力 8.供電色號
     def electricityinfo_current(self, strDate = datetime.datetime.today().date()):
         #今日日期
         dataTimeStampP1 = 'null'
@@ -28,7 +28,7 @@ class crawler:
         #今日最大供電能力
         supply_arranged_max = 'null'
         #供電狀況
-        lighttext = 'null'
+        lightState = 'null'
         # 擷取次數
         num = 0
         try:
@@ -47,16 +47,28 @@ class crawler:
                 load_forecast_max = driver.find_element(By.ID, 'load_forecast_max').text.replace(",", "")
                 load_forecast_max_perc = driver.find_element(By.ID, 'load_forecast_max_perc').text + "%"
                 supply_arranged_max = driver.find_element(By.ID, 'supply_arranged_max').text.replace(",", "")
-                lighttext = driver.find_element(By.ID, 'lighttext').text[0:4]
+                #lighttext = driver.find_element(By.ID, 'lighttext').text[0:4]
                 num += 1
                 #確認是否擷取到數據 沒有最多retry三次
-                if not latest_load == 'null' and not latest_load_perc == 'null' and not load_forecast_max == 'null' and not load_forecast_max_perc == 'null' and not supply_arranged_max == 'null' and not lighttext == 'null':
+                if not latest_load == 'null' and not latest_load_perc == 'null' and not load_forecast_max == 'null' and not load_forecast_max_perc == 'null' and not supply_arranged_max == 'null':
+                    value = float(supply_arranged_max) - float(latest_load)
+                    percent = (value/float(supply_arranged_max)) * 100
+                    if percent > 10:
+                        lightState = '#00DD00'
+                    elif 10 > percent >= 6:
+                        lightState = '#FFFF00'
+                    elif percent < 6 and value > 90:
+                        lightState = '#FFA500'
+                    elif 90 > value >= 50:
+                        lightState = '#FF0000'
+                    elif value < 50:
+                        lightState = '#444444'
                     break
         #網頁擷取錯誤例外處理
         except:
             pass
 
-        data = {'dataTimeStampP1': dataTimeStampP1, 'dataTimeStampP2': dataTimeStampP2, 'latest_load': latest_load, 'latest_load_perc': latest_load_perc, 'load_forecast_max': load_forecast_max, 'load_forecast_max_perc': load_forecast_max_perc, 'supply_arranged_max': supply_arranged_max, 'lighttext': lighttext}
+        data = {'dataTimeStampP1': dataTimeStampP1, 'dataTimeStampP2': dataTimeStampP2, 'latest_load': latest_load, 'latest_load_perc': latest_load_perc, 'load_forecast_max': load_forecast_max, 'load_forecast_max_perc': load_forecast_max_perc, 'supply_arranged_max': supply_arranged_max, 'lightState': lightState}
         return data
 
     # 擷取昨日電力供需資訊 1.昨日日期 2.昨日最高用電量 3.尖峰備轉容量率
@@ -92,7 +104,7 @@ class crawler:
         data = {'ydaytime': ydaytime, 'load_max_yday': load_max_yday, 'rsv_perc_yday': rsv_perc_yday}
         return data
 
-    # 擷取未來電力供需資訊(一周) 1.更新日期 2.日期 3.day 4.淨尖峰供電能力 5.尖峰負載 6.備轉容量 7.備轉容量率 8.備轉容量燈號
+    # 擷取未來電力供需資訊(一周) 1.更新日期 2.日期 3.day 4.淨尖峰供電能力 5.尖峰負載 6.備轉容量 7.備轉容量率 8.備轉容量供電色號
     def electricityInfo_future(self, strDate = datetime.datetime.today().date()):
         data = []
         options = Options()
@@ -137,7 +149,7 @@ class crawler:
                             lightState = '#00DD00'
                         elif 10 > percent >= 6:
                             lightState = '#FFFF00'
-                        elif percent < 6:
+                        elif percent < 6 and value > 90:
                             lightState = '#FFA500'
                         elif 90 > value >= 50:
                             lightState = '#FF0000'
@@ -472,7 +484,7 @@ class crawler:
         data = cwbinfoList
         return data
 
-    # 擷取今日電力供需資訊函數 1.備轉容量 2.備轉容量率
+    # 擷取今日電力供需資訊函數 1.備轉容量率
     def electricity_today(self, strDate=datetime.datetime.today().date()):
         # 備轉容量率
         reserve = 'null'
